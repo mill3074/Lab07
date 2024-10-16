@@ -16,6 +16,7 @@ int main()
 	PhysicsCircle ball;
 	ball.setCenter(Vector2f(400, 200));
 	ball.setRadius(20);
+	ball.setVelocity(Vector2f(0.5,0.5));
 	world.AddPhysicsBody(ball);
 
 	// Create the floor
@@ -47,15 +48,14 @@ int main()
 	Target.setSize(Vector2f(50, 50));
 	Target.setCenter(Vector2f(400, 300));
 	Target.setFillColor(Color(255, 0, 0));
-	Target.setRotation(10);
 	Target.setStatic(true);
 	world.AddPhysicsBody(Target);
-	Target.
 
 	int thudCount(0);
 	floor.onCollision = [&thudCount](PhysicsBodyCollisionResult result) {
 		cout << "thud " << thudCount << endl;
 		thudCount++;
+
 
 		//int bangCount(0);
 			//floor.onCollision = [&bangCount](PhysicsBodyCollisionResult result) {
