@@ -28,44 +28,52 @@ int main()
 
 	PhysicsRectangle Roof;
 	Roof.setSize(Vector2f(800, 20));
-	Roof.setCenter(Vector2f(400, 0));
+	Roof.setCenter(Vector2f(400, 10));
 	Roof.setStatic(true);
 	world.AddPhysicsBody(Roof);
 
 	PhysicsRectangle Wallr;
-	Wallr.setSize(Vector2f(30, 600));
+	Wallr.setSize(Vector2f(30, 550));
 	Wallr.setCenter(Vector2f(800, 300));
 	Wallr.setStatic(true);
 	world.AddPhysicsBody(Wallr);
 
 	PhysicsRectangle WallL;
-	WallL.setSize(Vector2f(30, 600));
+	WallL.setSize(Vector2f(30, 550));
 	WallL.setCenter(Vector2f(0, 300));
 	WallL.setStatic(true);
 	world.AddPhysicsBody(WallL);
 
 	PhysicsRectangle Target;
-	Target.setSize(Vector2f(50, 50));
+	Target.setSize(Vector2f(75, 50));
 	Target.setCenter(Vector2f(400, 300));
 	Target.setFillColor(Color(255, 0, 0));
 	Target.setStatic(true);
 	world.AddPhysicsBody(Target);
 
-	int thudCount(0);
+	int thudCount(1);
 	floor.onCollision = [&thudCount](PhysicsBodyCollisionResult result) {
 		cout << "thud " << thudCount << endl;
 		thudCount++;
-
-
-		//int bangCount(0);
-			//floor.onCollision = [&bangCount](PhysicsBodyCollisionResult result) {
-			//cout << "thud " << bangCount << endl;
-			//bangCount++;
-
-		//if (bangCount == 3) {
-			//cout << "okay" << endl;
-		//}
 	};
+
+	Wallr.onCollision = [&thudCount](PhysicsBodyCollisionResult result) {
+		cout << "thud " << thudCount << endl;
+		thudCount++;
+	};
+
+	int bangCount(0);
+	Target.onCollision = [&bangCount](PhysicsBodyCollisionResult result) {
+		bangCount++;
+		cout << "bang " << bangCount << endl;
+		
+
+		if (bangCount == 3) {
+			cout << "!!!!" << endl;
+			exit(0);
+		}
+	};
+
 
 
 
@@ -87,7 +95,6 @@ int main()
 		window.draw(WallL);
 		window.draw(Roof);
 		window.draw(Target);
-		world.VisualizeAllBounds(window);
 		window.display();
 
 	}
